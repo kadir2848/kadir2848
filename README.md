@@ -1,15 +1,19 @@
 <picture>
+  <source media="(max-width: 767px) and (prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/hero-mobile-light.png">
+  <source media="(max-width: 767px) and (prefers-reduced-motion: reduce)" srcset="assets/hero-mobile-dark.png">
+  <source media="(max-width: 767px) and (prefers-color-scheme: light)" srcset="assets/hero-mobile-light.svg">
+  <source media="(max-width: 767px)" srcset="assets/hero-mobile-dark.svg">
   <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/hero-light.png">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/hero-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.gif">
-  <img src="assets/hero-dark.gif" width="100%" alt="Kadir Can Girenitlioğlu — Computer Engineering, Cybersecurity, Software Engineering and Open Source. An illustrative event flows through reduction, deduplication and a reasoning gate.">
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <img src="assets/hero-dark.svg" width="100%" alt="Kadir Can Girenitlioğlu. Computer Engineering, Cybersecurity, Software Engineering, Open Source. Think from first principles. Build with conviction. Stay useful. Play the long game.">
 </picture>
 
-[GitHub](https://github.com/kadir2848) &nbsp; / &nbsp; [Hugging Face](https://huggingface.co/girenit) &nbsp; / &nbsp; [Interactive lab](https://kadir2848.github.io/codex-orchestrator-showcase/) &nbsp; / &nbsp; [Merged OSS work](https://github.com/OilpriceAPI/oilpriceapi-go/pull/44)
+[GitHub](https://github.com/kadir2848) &nbsp; / &nbsp; [Hugging Face](https://huggingface.co/girenit) &nbsp; / &nbsp; [Selected work](#selected-work) &nbsp; / &nbsp; [Open source](#open-source)
 
 ## About / current focus
 
-I'm Kadir Can Girenitlioğlu. I build software, explore systems and use AI-assisted engineering to work through concrete problems. My current work includes a local Codex orchestration lab and a public simulation of its event-reduction and reasoning-gate concepts.
+I build software and explore systems through concrete projects, careful testing and open-source contributions. My public work spans web interfaces, cybersecurity showcases and experiments in AI-assisted engineering.
 
 **Interests:** computer engineering, cybersecurity, networking and cloud infrastructure. **Engineering focus:** predictable behavior, explicit boundaries and regression tests.
 

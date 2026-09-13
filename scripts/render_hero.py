@@ -1,47 +1,69 @@
-"""Generate original, local profile artwork. Requires Pillow and a Unicode TTF font.
-Usage: python scripts/render_hero.py --font FONT.ttf
+"""Long Horizon: original, scriptless profile media.
+Requires Python 3 and Playwright with Chromium. Run: python scripts/render_hero.py
+The animation is an eight-second periodic loop; essential text never disappears.
 """
 from pathlib import Path
-import argparse,math
-from PIL import Image,ImageDraw,ImageFont
-parser=argparse.ArgumentParser();parser.add_argument('--font',required=True);args=parser.parse_args()
-out=Path(__file__).resolve().parents[1]/'assets';out.mkdir(exist_ok=True)
-W,H=1280,420
-fonts={n:ImageFont.truetype(args.font,n) for n in [13,15,17,19,23,52]}
-for theme in ['dark','light']:
- c={'bg':'#0b121a','panel':'#111e27','grid':'#172831','text':'#edf4f8','muted':'#9eb2c0','accent':'#87dfc0','line':'#2a404c'} if theme=='dark' else {'bg':'#f3f8fa','panel':'#e7f0f3','grid':'#dce8ed','text':'#142b37','muted':'#48616e','accent':'#14694f','line':'#b4cdd7'}
- base=Image.new('RGB',(W,H),c['bg']);d=ImageDraw.Draw(base)
- for x in range(780,W,32):d.line((x,0,x,H),fill=c['grid'])
- for y in range(0,H,32):d.line((780,y,W,y),fill=c['grid'])
- d.line((52,58,1228,58),fill=c['line'],width=1)
- d.text((52,26),'KCG  /  ENGINEERING NOTES',font=fonts[15],fill=c['muted'])
- d.text((1002,26),'SYSTEMS · OPEN SOURCE',font=fonts[13],fill=c['muted'])
- d.text((52,86),'Kadir Can Girenitlioğlu',font=fonts[52],fill=c['text'])
- d.text((54,160),'Computer Engineering  /  Cybersecurity',font=fonts[23],fill=c['accent'])
- d.text((54,197),'Software Engineering  /  Open Source',font=fonts[23],fill=c['text'])
- d.text((54,244),'Exploring systems. Building with AI. Contributing with evidence.',font=fonts[17],fill=c['muted'])
- # Abstract signal reducer motif; no activity counts or live status claims.
- for i,y in enumerate([103,128,153,178,203]):
-  d.line((990,y,1020,y),fill=c['line'],width=2);d.line((1020,y,1071,153),fill=c['line'],width=2)
- d.rounded_rectangle((1071,132,1113,174),radius=9,fill=c['panel'],outline=c['accent'],width=2)
- d.line((1113,153,1190,153),fill=c['accent'],width=2);d.ellipse((1190,148,1200,158),fill=c['accent'])
- d.text((1035,224),'SIGNAL > NOISE',font=fonts[15],fill=c['muted'])
- d.rounded_rectangle((52,307,1228,381),radius=9,fill=c['panel'],outline=c['line'])
- d.text((75,330),'event.route',font=fonts[17],fill=c['muted'])
- centers=[365,550,735,920,1110];labels=['EVENT','REDUCE','DEDUPE','GATE','DECISION']
- for i,(cx,label) in enumerate(zip(centers,labels)):
-  d.text((cx-35,331),label,font=fonts[15],fill=c['text'])
-  if i<4:d.line((cx+57,342,centers[i+1]-55,342),fill=c['line'],width=2)
- d.text((54,395),'ILLUSTRATIVE FLOW · INDEPENDENT PROJECTS',font=fonts[13],fill=c['muted'])
- base.save(out/f'hero-{theme}.png',optimize=True)
- frames=[]
- for frame in range(50):
-  im=base.copy();dr=ImageDraw.Draw(im)
-  progress=min(frame/36,1)*4;idx=min(int(progress),4)
-  if frame<40:
-   x=centers[idx] if idx==4 else centers[idx]+(centers[idx+1]-centers[idx])*(progress-idx)
-   dr.ellipse((x-4,365,x+4,373),fill=c['accent'])
-   dr.line((centers[idx]-34,362,centers[idx]+40,362),fill=c['accent'],width=2)
-  frames.append(im.quantize(colors=96))
- frames[0].save(out/f'hero-{theme}.gif',save_all=True,append_images=frames[1:],duration=120,loop=0,optimize=True,disposal=1)
- print(theme,(out/f'hero-{theme}.gif').stat().st_size,'bytes')
+import html
+OUT=Path(__file__).resolve().parents[1]/'assets'
+PHRASES=['Think from first principles.','Build with conviction.','Stay useful.','Play the long game.']
+PALETTES={
+'dark':dict(bg='#10151c',fg='#f0eee9',muted='#a7b0ba',accent='#d8b98a',line='#66788c',haze='#7a91b0'),
+'light':dict(bg='#f5f3ee',fg='#1c2b3b',muted='#4e6072',accent='#81592e',line='#8c9fb0',haze='#b6c6d5')}
+def text(x,y,s,size=24,fill='fg',family='sans',extra='',c=None):
+ return f'<text x="{x}" y="{y}" fill="{c.get(fill,fill)}" font-size="{size}" font-family="{("Arial,Helvetica,sans-serif" if family=="sans" else "Georgia,serif")}" {extra}>{html.escape(s)}</text>'
+def svg(theme,mobile=False,static=False):
+ c=PALETTES[theme];w,h=(720,940) if mobile else (1440,760)
+ glow=.30 if theme=='dark' else .12;gold=.21 if theme=='dark' else .07
+ css='''@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-7px)}}
+@keyframes breath{0%,100%{opacity:.28}50%{opacity:.65}}
+@keyframes thought{0%,100%{opacity:.18}50%{opacity:.9}}
+@keyframes emphasis{0%,100%{opacity:0}12%,24%{opacity:1}38%,85%{opacity:0}}
+.drift{animation:drift 8s ease-in-out infinite}.breath{animation:breath 8s ease-in-out infinite}.thought{animation:thought 8s ease-in-out infinite}.emphasis{animation:emphasis 8s ease-in-out infinite;opacity:0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.emphasis{opacity:0}}'''
+ if static:css+='*{animation:none!important}.emphasis{opacity:0}'
+ parts=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="title desc"><title id="title">Kadir Can Girenitlioğlu — Long Horizon</title><desc id="desc">'+html.escape(' '.join(PHRASES))+'</desc>',f'<style>{css}</style>',f'<defs><radialGradient id="haze"><stop stop-color="{c["haze"]}" stop-opacity="{glow}"/><stop offset="1" stop-color="{c["bg"]}" stop-opacity="0"/></radialGradient><radialGradient id="gold"><stop stop-color="{c["accent"]}" stop-opacity="{gold}"/><stop offset="1" stop-color="{c["bg"]}" stop-opacity="0"/></radialGradient></defs>',f'<rect width="{w}" height="{h}" fill="{c["bg"]}"/>']
+ def t(*args,**kwargs):parts.append(text(*args,**kwargs,c=c))
+ x=48 if mobile else 76
+ if mobile:
+  # Horizon beneath the typography: its own space, never under essential text.
+  parts.append(f'<g class="drift"><ellipse cx="540" cy="785" rx="340" ry="155" fill="url(#haze)"/><path d="M90 856 Q390 630 778 792" fill="none" stroke="{c["line"]}" stroke-width="1.6" opacity=".5"/><path d="M90 868 Q390 642 778 804" fill="none" stroke="{c["line"]}" opacity=".12"/></g>')
+  parts.append(f'<ellipse class="breath" cx="542" cy="758" rx="155" ry="30" fill="url(#gold)"/>')
+  t(x,106,'KADIR CAN',56,extra='letter-spacing="1" font-weight="700"')
+  t(x,170,'GIRENITLIOĞLU',57,extra='letter-spacing=".3" font-weight="700"')
+  t(x,234,'Computer Engineering · Cybersecurity',37,fill='muted')
+  t(x,274,'Software Engineering · Open Source',37,fill='muted')
+  ys=[376,439,502,565]
+  for i,y in enumerate(ys):
+   t(x,y,PHRASES[i],39,fill=('accent' if static and i==3 else 'fg'),family='serif');t(x,y,PHRASES[i],39,fill='accent',family='serif',extra=f'class="emphasis" style="animation-delay:-{8-2*i}s"')
+  t(x,654,'Curiosity. Discipline. Patience.',37,fill='muted')
+  coords=[(460,751),(535,735),(613,723),(675,736)]
+ else:
+  parts.append(f'<g class="drift"><ellipse cx="1170" cy="420" rx="395" ry="305" fill="url(#haze)"/><path d="M736 581 Q1070 292 1470 514" fill="none" stroke="{c["line"]}" stroke-width="1.7" opacity=".52"/><path d="M736 593 Q1070 304 1470 526" fill="none" stroke="{c["line"]}" opacity=".12"/></g>')
+  parts.append(f'<ellipse class="breath" cx="1150" cy="436" rx="230" ry="64" fill="url(#gold)"/>')
+  t(x,116,'KADIR CAN',66,extra='letter-spacing="1.5" font-weight="700"')
+  t(x,196,'GIRENITLIOĞLU',76,extra='letter-spacing=".3" font-weight="700"')
+  t(x,256,'Computer Engineering · Cybersecurity',27,fill='muted')
+  t(x,294,'Software Engineering · Open Source',27,fill='muted')
+  for i,y in enumerate([398,460,522,584]):
+   t(x,y,PHRASES[i],42,fill=('accent' if static and i==3 else 'fg'),family='serif');t(x,y,PHRASES[i],42,fill='accent',family='serif',extra=f'class="emphasis" style="animation-delay:-{8-2*i}s"')
+  t(x,687,'Curiosity. Discipline. Patience.',25,fill='muted')
+  coords=[(923,461),(1043,426),(1175,424),(1298,450)]
+ for i,(cx,cy) in enumerate(coords):
+  parts.append(f'<g class="thought" style="animation-delay:-{i*1.7}s"><circle cx="{cx}" cy="{cy}" r="3" fill="{c["accent"]}"/><circle cx="{cx}" cy="{cy}" r="9" fill="none" stroke="{c["accent"]}" stroke-width=".7" opacity=".35"/></g>')
+ parts.append('</svg>');return '\n'.join(parts)
+if __name__=='__main__':
+ import tempfile
+ from playwright.sync_api import sync_playwright
+ OUT.mkdir(exist_ok=True)
+ with sync_playwright() as p:
+  browser=p.chromium.launch(headless=True)
+  for theme in PALETTES:
+   for mobile in [False,True]:
+    stem='hero-'+('mobile-' if mobile else '')+theme
+    (OUT/(stem+'.svg')).write_text(svg(theme,mobile))
+    with tempfile.TemporaryDirectory() as folder:
+     still=Path(folder)/'still.svg';still.write_text(svg(theme,mobile,True))
+     page=browser.new_page(viewport={'width':720 if mobile else 1440,'height':940 if mobile else 760},device_scale_factor=1)
+     page.goto(still.as_uri());page.screenshot(path=str(OUT/(stem+'.png')));page.close()
+  browser.close()
+ print('Rendered four original SVG animations and four intentional PNG stills.')

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="940" viewBox="0 0 720 940" role="img" aria-labelledby="title desc"><title id="title">Kadir Can Girenitlioğlu — Long Horizon</title><desc id="desc">Think from first principles. Build with conviction. Stay useful. Play the long game.</desc>
+<style>@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-7px)}}
+@keyframes breath{0%,100%{opacity:.28}50%{opacity:.65}}
+@keyframes thought{0%,100%{opacity:.18}50%{opacity:.9}}
+@keyframes emphasis{0%,100%{opacity:0}12%,24%{opacity:1}38%,85%{opacity:0}}
+.drift{animation:drift 8s ease-in-out infinite}.breath{animation:breath 8s ease-in-out infinite}.thought{animation:thought 8s ease-in-out infinite}.emphasis{animation:emphasis 8s ease-in-out infinite;opacity:0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.emphasis{opacity:0}}</style>
+<defs><radialGradient id="haze"><stop stop-color="#b6c6d5" stop-opacity="0.12"/><stop offset="1" stop-color="#f5f3ee" stop-opacity="0"/></radialGradient><radialGradient id="gold"><stop stop-color="#81592e" stop-opacity="0.07"/><stop offset="1" stop-color="#f5f3ee" stop-opacity="0"/></radialGradient></defs>
+<rect width="720" height="940" fill="#f5f3ee"/>
+<g class="drift"><ellipse cx="540" cy="785" rx="340" ry="155" fill="url(#haze)"/><path d="M90 856 Q390 630 778 792" fill="none" stroke="#8c9fb0" stroke-width="1.6" opacity=".5"/><path d="M90 868 Q390 642 778 804" fill="none" stroke="#8c9fb0" opacity=".12"/></g>
+<ellipse class="breath" cx="542" cy="758" rx="155" ry="30" fill="url(#gold)"/>
+<text x="48" y="106" fill="#1c2b3b" font-size="56" font-family="Arial,Helvetica,sans-serif" letter-spacing="1" font-weight="700">KADIR CAN</text>
+<text x="48" y="170" fill="#1c2b3b" font-size="57" font-family="Arial,Helvetica,sans-serif" letter-spacing=".3" font-weight="700">GIRENITLIOĞLU</text>
+<text x="48" y="234" fill="#4e6072" font-size="37" font-family="Arial,Helvetica,sans-serif" >Computer Engineering · Cybersecurity</text>
+<text x="48" y="274" fill="#4e6072" font-size="37" font-family="Arial,Helvetica,sans-serif" >Software Engineering · Open Source</text>
+<text x="48" y="376" fill="#1c2b3b" font-size="39" font-family="Georgia,serif" >Think from first principles.</text>
+<text x="48" y="376" fill="#81592e" font-size="39" font-family="Georgia,serif" class="emphasis" style="animation-delay:-8s">Think from first principles.</text>
+<text x="48" y="439" fill="#1c2b3b" font-size="39" font-family="Georgia,serif" >Build with conviction.</text>
+<text x="48" y="439" fill="#81592e" font-size="39" font-family="Georgia,serif" class="emphasis" style="animation-delay:-6s">Build with conviction.</text>
+<text x="48" y="502" fill="#1c2b3b" font-size="39" font-family="Georgia,serif" >Stay useful.</text>
+<text x="48" y="502" fill="#81592e" font-size="39" font-family="Georgia,serif" class="emphasis" style="animation-delay:-4s">Stay useful.</text>
+<text x="48" y="565" fill="#1c2b3b" font-size="39" font-family="Georgia,serif" >Play the long game.</text>
+<text x="48" y="565" fill="#81592e" font-size="39" font-family="Georgia,serif" class="emphasis" style="animation-delay:-2s">Play the long game.</text>
+<text x="48" y="654" fill="#4e6072" font-size="37" font-family="Arial,Helvetica,sans-serif" >Curiosity. Discipline. Patience.</text>
+<g class="thought" style="animation-delay:-0.0s"><circle cx="460" cy="751" r="3" fill="#81592e"/><circle cx="460" cy="751" r="9" fill="none" stroke="#81592e" stroke-width=".7" opacity=".35"/></g>
+<g class="thought" style="animation-delay:-1.7s"><circle cx="535" cy="735" r="3" fill="#81592e"/><circle cx="535" cy="735" r="9" fill="none" stroke="#81592e" stroke-width=".7" opacity=".35"/></g>
+<g class="thought" style="animation-delay:-3.4s"><circle cx="613" cy="723" r="3" fill="#81592e"/><circle cx="613" cy="723" r="9" fill="none" stroke="#81592e" stroke-width=".7" opacity=".35"/></g>
+<g class="thought" style="animation-delay:-5.1s"><circle cx="675" cy="736" r="3" fill="#81592e"/><circle cx="675" cy="736" r="9" fill="none" stroke="#81592e" stroke-width=".7" opacity=".35"/></g>
+</svg>
